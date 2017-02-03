@@ -14,5 +14,29 @@ module Api::V1
       @scientist = Scientist.create(name: params[:scientist][:name])
       render json: @scientist
     end
+
+    def delete
+      @scientist = Scientist.find(params[:id])
+      @scientist.destroy
+      @scientists = Scientist.all
+      render json: @scientists
+    end
+
+    def edit
+      @scientist = Scientist.find(params[:id])
+    end
+
+    def update
+      @scientist = Scientist.find(params[:id])
+      @scientist = Scientist.update(scientist_params)
+      render json: @scientist
+    end
+
+    private
+
+    def scientist_params
+      params.require(:scientist).permit(:name, :birthdate, :hometown, :bio)
+    end
+
   end
 end
